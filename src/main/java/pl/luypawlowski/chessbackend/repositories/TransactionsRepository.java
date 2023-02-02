@@ -1,6 +1,7 @@
 package pl.luypawlowski.chessbackend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import pl.luypawlowski.chessbackend.entities.Transaction;
 import pl.luypawlowski.chessbackend.entities.User;

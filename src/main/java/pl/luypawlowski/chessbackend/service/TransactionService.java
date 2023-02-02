@@ -58,5 +58,18 @@ public class TransactionService {
         return transactionsRepository.getAllUserTransactions(user).stream().map(TransactionDto::fromDomain).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void deleteUserTransaction(Long transactionId, User user) {
+        Transaction transaction = transactionsRepository.findById(transactionId).orElseThrow();
+        String coinName = transaction.getCoin();
+        Double amount = transaction.getAmount();
+
+        CoinUser coinUser = coinUserRepository.findByOwnerAndName(user, coinName).orElseThrow();
+        Double coinAmount = coinUser.getAmount();
+        Double restAmount = coinAmount - amount;
+        coinUser.setAmount(restAmount);
+        coinUserRepository.save(coinUser);
+        transactionsRepository.delete(transaction);
+    }
 
 }

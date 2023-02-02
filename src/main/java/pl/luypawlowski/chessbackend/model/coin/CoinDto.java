@@ -14,4 +14,9 @@ public class CoinDto {
     private String name;
     private Double price;
     private Double amount;
+
+    public CoinDto( String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
 }
