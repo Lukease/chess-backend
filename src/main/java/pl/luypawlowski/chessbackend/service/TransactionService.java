@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.luypawlowski.chessbackend.entities.CoinUser;
 import pl.luypawlowski.chessbackend.entities.Transaction;
 import pl.luypawlowski.chessbackend.entities.User;
+import pl.luypawlowski.chessbackend.model.coin.CoinUserDto;
 import pl.luypawlowski.chessbackend.model.crypto.TransactionDto;
 import pl.luypawlowski.chessbackend.repositories.CoinUserRepository;
 import pl.luypawlowski.chessbackend.repositories.TransactionsRepository;
@@ -70,6 +71,12 @@ public class TransactionService {
         coinUser.setAmount(restAmount);
         coinUserRepository.save(coinUser);
         transactionsRepository.delete(transaction);
+    }
+
+    public CoinUserDto getUserCoin(String coinName, User user) {
+        CoinUser coinUser = coinUserRepository.findByOwnerAndName(user, coinName).orElseThrow();
+
+        return CoinUserDto.fromDomain(coinUser);
     }
 
 }

@@ -2,8 +2,10 @@ package pl.luypawlowski.chessbackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.luypawlowski.chessbackend.entities.CoinUser;
 import pl.luypawlowski.chessbackend.entities.User;
 import pl.luypawlowski.chessbackend.model.coin.CoinDto;
+import pl.luypawlowski.chessbackend.model.coin.CoinUserDto;
 import pl.luypawlowski.chessbackend.model.crypto.TransactionDto;
 import pl.luypawlowski.chessbackend.model.user.UserLogInRequest;
 import pl.luypawlowski.chessbackend.service.CoinService;
@@ -54,5 +56,12 @@ public class TransactionController {
         User user = userService.findUserByAuthorizationToken(authorization);
 
         transactionService.deleteUserTransaction(transactionId, user);
+    }
+
+    @GetMapping("/get-coin")
+    public CoinUserDto getUserCoinByName(@RequestParam String name, @RequestHeader("Authorization") String authorization) {
+        User user = userService.findUserByAuthorizationToken(authorization);
+
+        return transactionService.getUserCoin(name, user);
     }
 }
