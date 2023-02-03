@@ -22,7 +22,7 @@ public class CoinService {
     WebClient client = WebClient.builder()
             .baseUrl("https://rest.coinapi.io/v1")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .defaultHeader("X-CoinAPI-Key", "B99E9C6A-C69D-4CED-A2D9-E774B3DC3E34")
+            .defaultHeader("X-CoinAPI-Key", "587BE89B-C7C0-44E8-A160-92BB8C0A2EB2")
             .build();
     private final Map<String, Double> coinsPrices = new HashMap<>();
     private final List<CoinDto> allCoins = new ArrayList<CoinDto>();
@@ -48,7 +48,12 @@ public class CoinService {
     }
 
     public Double getPriceOfCoin(String coinName) {
-        getCurrentRate(coinName);
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        if (localDateTime.isAfter(lastUpdate.plusMinutes(30))){
+            getCurrentRate(coinName);
+        }
+
         return coinsPrices.get(coinName);
     }
 
@@ -75,10 +80,7 @@ public class CoinService {
             }
             lastUpdate = LocalDateTime.now();
 
-            return allCoins;
-        } else {
-
-            return allCoins;
         }
+        return allCoins;
     }
 }
