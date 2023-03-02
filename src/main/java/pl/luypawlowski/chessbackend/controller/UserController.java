@@ -53,15 +53,6 @@ public class UserController {
         }
     }
 
-    @DeleteMapping
-    public void deleteUserByLogin(@RequestParam("login") String login, @RequestHeader("Authorization") String authorization) {
-        if (userService.findUserAuthorizationToken(authorization, login)) {
-            userService.deleteUserByLogin(login);
-        } else {
-            throw new WrongCredentialsException("No authorization!");
-        }
-    }
-
     @PutMapping("/new-login")
     public UserDto editUserLogin(@RequestBody NewLoginRequest newLoginRequest,
                                  @RequestHeader("Authorization") String authorization) {

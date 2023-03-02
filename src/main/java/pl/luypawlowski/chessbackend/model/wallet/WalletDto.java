@@ -1,7 +1,5 @@
 package pl.luypawlowski.chessbackend.model.wallet;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +13,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WalletDto {
-    private Long id;
-    private Long totalValue;
-    private Long trueTotalValue;
-    private List<CoinUserDto> allUserCoins;
+    private Long userId;
+    private Double investmentsValue;
+    private Double currentValue;
+    private List<CoinInWallet> allCoinsInWallet;
+
+    public WalletDto(Long userId, List<CoinUserDto> allUserCoins) {
+        this.userId = userId;
+        this.currentValue = allUserCoins.stream().mapToDouble(
+                coinUserDto -> coinUserDto.getAmount() * coinUserDto.getCurrentPrice()
+        ).sum();
+    }
+
+    public static WalletDto of(Long userId, List<CoinUserDto> coinUsers) {
+        return new WalletDto(userId, coinUsers);
+    }
 }

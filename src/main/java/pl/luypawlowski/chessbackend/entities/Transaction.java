@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Table(name = "transactions")
 @Setter
@@ -20,17 +19,17 @@ public class Transaction {
     private LocalDate date;
     private String coin;
     private Double amount;
-    private Double value;
+    private Double price;
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    public Transaction(String type, String comment, LocalDate date, String coin, Double amount, Double value) {
+    public Transaction(String type, String comment, LocalDate date, String coin, Double amount, Double price) {
         this.type = type;
         this.comment = comment;
         this.date = date;
         this.coin = coin;
         this.amount = amount;
-        this.value = value;
+        this.price = price;
     }
 }

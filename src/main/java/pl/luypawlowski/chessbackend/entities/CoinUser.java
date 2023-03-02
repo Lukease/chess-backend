@@ -15,16 +15,16 @@ public class CoinUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Double value;
+    private Double price;
     private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    public CoinUser(String name, Double value, Double amount, User owner) {
+    public CoinUser(String name, Double price, Double amount, User owner) {
         this.name = name;
-        this.value = value;
+        this.price = price;
         this.amount = amount;
         this.owner = owner;
     }

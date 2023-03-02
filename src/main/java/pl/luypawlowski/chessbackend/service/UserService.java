@@ -60,11 +60,6 @@ public class UserService {
         return usersRepository.findAll().stream().map(UserDto::fromDomain).collect(Collectors.toList());
     }
 
-    public void deleteUserByLogin(String login) {
-        User user = usersRepository.findByLogin(login).orElseThrow(() -> new RuntimeException("User not found!"));
-        usersRepository.delete(user);
-    }
-
     @Transactional
     public UserDto updateUserLogin(User user,String newLogin) {
         user.setLogin(newLogin);

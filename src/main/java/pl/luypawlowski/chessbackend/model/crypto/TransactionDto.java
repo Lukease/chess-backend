@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.luypawlowski.chessbackend.entities.Transaction;
-import pl.luypawlowski.chessbackend.model.user.UserDto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @NoArgsConstructor
 @Setter
@@ -19,27 +17,27 @@ public class TransactionDto {
     private LocalDate date;
     private String coin;
     private Double amount;
-    private Double value;
+    private Double price;
     private Long ownerId;
 
-    public TransactionDto(Long id, String type, String comment, LocalDate date, String coin, Double amount, Double value, Long userId) {
+    public TransactionDto(Long id, String type, String comment, LocalDate date, String coin, Double amount, Double price, Long userId) {
         this.id = id;
         this.type = type;
         this.comment = comment;
         this.date = date;
         this.coin = coin;
         this.amount = amount;
-        this.value = value;
+        this.price = price;
         this.ownerId = userId;
     }
 
     public Transaction toDomain() {
-        return new Transaction(this.type, this.comment, this.date, this.coin, this.amount, this.value);
+        return new Transaction(this.type, this.comment, this.date, this.coin, this.amount, this.price);
     }
 
     public static TransactionDto fromDomain(Transaction transaction) {
         return new TransactionDto(transaction.getId(), transaction.getType(),
                 transaction.getComment(), transaction.getDate(), transaction.getCoin(),
-                transaction.getAmount(), transaction.getValue(), transaction.getOwner().getId());
+                transaction.getAmount(), transaction.getPrice(), transaction.getOwner().getId());
     }
 }
